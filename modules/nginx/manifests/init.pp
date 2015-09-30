@@ -60,9 +60,9 @@ class nginx {
   }
 
   file { "${index_file}":
-    ensure => 'file',
-    path   => '/var/www/index.html',
-    source => 'puppet:///modules/nginx/index.html',
+    ensure  => 'file',
+    path    => '/var/www/index.html',
+    content => template('nginx/index.html.erb'),
   }
 
   file { "${nginx_cfg}":
