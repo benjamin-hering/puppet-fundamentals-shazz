@@ -43,42 +43,42 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class nginx {
+  $nginx_doc_root = '/var/www'
+  $nginx_cfg      = '/etc/nginx/nginx.conf'
+  $nginx_default  = '/etc/nginx/conf.d/default.conf'
+  $index_file     = '/var/www/index.html'
 
   package { 'nginx':
     ensure => present,
   }
 
-  file { 'Nginx Document Root':
+  file { "${nginx_doc_root}":
     ensure => 'directory',
-    path   => '/var/www',
-    mode   => '0755',
-    #type   => 'directory',
-    owner => 'root',
-    group => 'root',
+    #mode   => '0755',
+    #owner => 'root',
+    #group => 'root',
   }
 
-  file { 'Nginx index':
+  file { "${index_file}":
     ensure => 'file',
     path   => '/var/www/index.html',
     source => 'puppet:///modules/nginx/index.html',
   }
 
-  file { 'Nginx config':
+  file { "${nginx_cfg}":
     ensure => 'file',
-    path   => '/etc/nginx/nginx.conf',
     source => 'puppet:///modules/nginx/nginx.conf',
   }
 
-  file { 'Nginx default site':
+  file { "${nginx_default}":
     ensure => 'file',
-    path   => '/etc/nginx/conf.d/default.conf',
     source => 'puppet:///modules/nginx/default.conf',
   }
 
   service { 'nginx':
     ensure    => 'running',
     enable    => 'true',
-    subscribe => File['Nginx default site', 'Nginx config'],
+    subscribe => File["${nginx_doc_root}", "${nginx_default}"],
   }
 
 }
