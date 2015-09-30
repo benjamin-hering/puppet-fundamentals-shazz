@@ -63,4 +63,22 @@ class nginx {
     source => 'puppet:///modules/nginx/index.html',
   }
 
+  file { 'Nginx config':
+    ensure => 'file',
+    path   => '/etc/nginx/nginx.conf',
+    source => 'puppet:///modules/nginx/nginx.conf',
+  }
+
+  file { 'Nginx default site':
+    ensure => 'file',
+    path   => '/etc/nginx/conf.d/default.conf',
+    source => 'puppet:///modules/nginx/default.conf',
+  }
+
+  service { 'nginx':
+    ensure    => 'running',
+    enable    => 'true',
+    subscribe => File['Nginx default site', 'Nginx config'],
+  }
+
 }
