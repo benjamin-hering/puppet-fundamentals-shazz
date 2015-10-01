@@ -27,5 +27,4 @@ node default {
 }
 
 node benjamin.puppetlabs.vm {
-  include nginx
 }
