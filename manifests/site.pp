@@ -25,3 +25,7 @@ node default {
   #   class { 'my_class': }
   notify { "Hello ${fqdn}": }
 }
+
+node benjamin.puppetlabs.vm {
+  include nginx
+}
