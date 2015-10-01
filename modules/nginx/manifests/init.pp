@@ -47,6 +47,7 @@ class nginx {
   $nginx_cfg      = '/etc/nginx/nginx.conf'
   $nginx_default  = '/etc/nginx/conf.d/default.conf'
   $index_file     = '/var/www/index.html'
+  #$nginx_site     = 'default'
 
   package { 'nginx':
     ensure => present,
@@ -70,15 +71,20 @@ class nginx {
     source => 'puppet:///modules/nginx/nginx.conf',
   }
 
-  file { "${nginx_default}":
-    ensure => 'file',
-    source => 'puppet:///modules/nginx/default.conf',
+  #  file { "${nginx_default}":
+  #    ensure => 'file',
+  #    source => 'puppet:///modules/nginx/default.conf',
+  #  }
+
+  nginx::vhost { 'default':
+    docroot => $nginx_doc_root,
+    notify  => Service['nginx'],
   }
 
   service { 'nginx':
     ensure    => 'running',
     enable    => 'true',
-    subscribe => File["${nginx_doc_root}", "${nginx_default}"],
+    subscribe => File["${nginx_cfg}"],
   }
 
 }
