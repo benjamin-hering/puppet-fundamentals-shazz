@@ -1,4 +1,17 @@
 ---
+mysql::db::wordpressdb::user: 'db_user'
+mysql::db::password: 'db_password'
+mysql::db::dbname: 'wordpress_db'
+mysql::db::host: 'localhost'
+
+mysql::server::root_password: 'password'
+mysql::bindings::php_enable: true
+
+wordpress::wp_owner: 'root'
+wordpress::wp_group: 'root'
+wordpress::db_user: 'db_user'
+wordpress::dp_password: 'db_password'
+
 nginx::params::nginx_doc_root: '/var/www/'
 nginx::params::nginx_cfg: '/etc/nginx/nginx.conf'
 nginx::params::nginx_devault: '/etc/nginx/conf.d/default.conf'
